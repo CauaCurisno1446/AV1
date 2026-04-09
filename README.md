@@ -1,2 +1,5 @@
-# AV1
-Repositório dedicado à entrega da AV1 da matéria de POO
+# Entrega  — *AV 1*
+
+> Professor: *Gerson da Penha* <br>
+> Aluno: *Cauã Cursino* <br>
+> Turma: 3° ADS
