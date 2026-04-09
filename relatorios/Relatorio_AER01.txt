@@ -11,22 +11,7 @@ Alcance:  300
 ========================================
                 ETAPAS                  
 ========================================
-
-ID:     ETP01
-Nome:   Colocar Mola
-Prazo:  12/01/2026
-Status: CONCLUIDA
-Funcionários:
-  - Operador
-----------------------------------------
-
-ID:     ETP01
-Nome:   Colocar Mola
-Prazo:  12/01/2026
-Status: CONCLUIDA
-Funcionários:
-  - Operador
-----------------------------------------
+Nenhuma etapa associada.
 
 ========================================
                 PEÇAS                   
@@ -42,18 +27,4 @@ Status:     PRONTA
 ========================================
                 TESTES                  
 ========================================
-
-ID:        TES01
-Tipo:      AERODINAMICO
-Resultado: APROVADO
-----------------------------------------
-
-ID:        TES02
-Tipo:      ELETRICO
-Resultado: REPROVADO
-----------------------------------------
-
-ID:        TES03
-Tipo:      HIDRAULICO
-Resultado: APROVADO
-----------------------------------------
+Nenhum teste realizado.

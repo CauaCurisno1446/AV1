@@ -1,3 +1,6 @@
+import path from "path"
+import fs from "fs"
+
 import Entrada from './util/Entrada'
 
 import Companhia from './modelo/Companhia'
@@ -40,12 +43,22 @@ var etpCarregada = ''
 
 
 let funcionarioLogado: Funcionario | null = null
+const dadosUsuarios = path.resolve(__dirname, "../data/Usuarios.txt")
+const arquivoVazio = !fs.existsSync(dadosUsuarios) || fs.readFileSync(dadosUsuarios, "utf-8").trim() === ""
 
 console.log(`\nBem-vindo ao aerocode`)
+if (arquivoVazio) {
+    console.log("\nNenhum usuário cadastrado. Criando administrador inicial...\n")
+    let cadastroFun = new CadastrarFuncionario(companhia.getFuncionarios)
+    cadastroFun.cadastrar()
+    Funcionario.salvar(companhia.getFuncionarios)
+    console.log("\nAdministrador criado! Faça login para continuar.\n")
+}
 console.log(`\nLOGIN:`)
 
 while (funcionarioLogado === null) {
     let entradaLogin = new Entrada()
+    
     let usuarioDigitado = entradaLogin.receberTexto(`Usuário: `)
     let senhaDigitada = entradaLogin.receberTexto(`Senha: `)
 
@@ -64,6 +77,7 @@ while (funcionarioLogado === null) {
         console.log(`Usuário ou senha incorretos. Tente novamente.\n`)
     }
 }
+
 
 console.log(`\nOlá, ${funcionarioLogado.nome}! Nível de acesso: ${funcionarioLogado.nivelPermissao}`)
 let nivelAtual = funcionarioLogado.nivelPermissao
@@ -95,38 +109,38 @@ while (execucao) {
 
     if (nivelAtual === NivelPermissao.ADMINISTRADOR || nivelAtual === NivelPermissao.ENGENHEIRO) {
         console.log("\n AERONAVES: ")
-        console.log(`4 - Cadastrar aeronave`)
-        console.log(`5 - Listar aeronaves`)
-        console.log(`6 - Carregar Aeronave`)
+        console.log(`3 - Cadastrar aeronave`)
+        console.log(`4 - Listar aeronaves`)
+        console.log(`5 - Carregar Aeronave`)
     }
 
     console.log("\n PEÇAS: ")
-    console.log(`7 - Cadastrar peca`)
-    console.log(`8 - Listar pecas`)
-    console.log(`9 - Carregar Peca`)
-    console.log(`10 - Atualizar status da peça`)
-    console.log(`11 - Associar peça a aeronave`)
+    console.log(`6 - Cadastrar peca`)
+    console.log(`7 - Listar pecas`)
+    console.log(`8 - Carregar Peca`)
+    console.log(`9 - Atualizar status da peça`)
+    console.log(`10 - Associar peça a aeronave`)
 
     console.log("\n ETAPAS: ")
-    console.log(`12 - Cadastrar etapa`)
-    console.log(`13 - Listar etapas`)
-    console.log(`14 - Carregar etapa`)
-    console.log(`15 - Iniciar etapa`)
-    console.log(`16 - Finalizar etapa`)
-    console.log(`17 - Associar funcionário a etapa`)
-    console.log(`18 - Associar aeronave a etapa`)
+    console.log(`11 - Cadastrar etapa`)
+    console.log(`12 - Listar etapas`)
+    console.log(`13 - Carregar etapa`)
+    console.log(`14 - Iniciar etapa`)
+    console.log(`15 - Finalizar etapa`)
+    console.log(`16 - Associar funcionário a etapa`)
+    console.log(`17 - Associar aeronave a etapa`)
 
     if (nivelAtual === NivelPermissao.ADMINISTRADOR || nivelAtual === NivelPermissao.ENGENHEIRO) {
         console.log("\n TESTES:")
-        console.log(`19 - Realizar teste`)
+        console.log(`18 - Realizar teste`)
     }
 
     if(nivelAtual === NivelPermissao.ADMINISTRADOR){
         console.log("\n RELATÓRIOS:")
-        console.log(`20 - Gerar relatório de aeronave`)
+        console.log(`19 - Gerar relatório de aeronave`)
     }
 
-    console.log(`0 - Sair`)
+    console.log(`\n 0 - Sair`)
 
     let entrada = new Entrada()
     let opcao = entrada.receberNumero(`\nPor favor, escolha uma opção: `)
@@ -168,18 +182,18 @@ while (execucao) {
             break;
 
         //AERONAVES
-        case 4:
+        case 3:
             let cadastroAer = new CadastrarAeronave(companhia.getAeronaves)
             cadastroAer.cadastrar()
             Aeronave.salvar(companhia.getAeronaves)
             break;
 
-        case 5:
+        case 4:
             let listagemAer = new ListagemAeronaves(companhia.getAeronaves)
             listagemAer.listar()
             break;
 
-        case 6:
+        case 5:
             let entradaCodigo = new Entrada()
             let codigoBuscado = entradaCodigo.receberTexto(`Por favor, informe o código da aeronave: `)
             let resultadoAer = Aeronave.carregar(codigoBuscado)
@@ -200,18 +214,18 @@ while (execucao) {
             break;
 
         //PECAS
-        case 7:
+        case 6:
             let cadastroPec = new CadastrarPeca(companhia.getPecas)
             cadastroPec.cadastrar()
             Peca.salvar(companhia.getPecas)
             break;
 
-        case 8:
+        case 7:
             let listagemPec = new ListagemPeca(companhia.getPecas)
             listagemPec.listar()
             break;
 
-        case 9:
+        case 8:
             let entradaCodigoPec = new Entrada()
             let codigoBuscadoPec = entradaCodigoPec.receberTexto(`Por favor, informe o código da peça: `)
             let resultadoPec = Peca.carregar(codigoBuscadoPec)
@@ -231,7 +245,7 @@ while (execucao) {
             }
             break;
 
-        case 10:
+        case 9:
             let entradaCodigoPecAtualizar = new Entrada()
             let codigoBuscadoPecAtualizar = entradaCodigoPecAtualizar.receberTexto(`Por favor, informe o código da peça: `)
 
@@ -248,7 +262,7 @@ while (execucao) {
             Peca.atualizarStatus(codigoBuscadoPecAtualizar, statusPec as any)
             break;
 
-        case 11:
+        case 10:
             if (!temAeronaveCarregada) {
                 console.log("Nenhuma aeronave carregada!")
                 break
@@ -259,7 +273,7 @@ while (execucao) {
             break;
 
         //ETAPAS
-        case 12:
+        case 11:
             if (!temAeronaveCarregada) {
                 console.log("Nenhuma aeronave carregada!")
                 break
@@ -272,12 +286,12 @@ while (execucao) {
             Etapa.associarAeronave(aerCarregada, ultimaEtapa.idEtapa)
             break;
 
-        case 13:
+        case 12:
             let listagemEtp = new ListagemEtapa(companhia.getEtapas)
             listagemEtp.listar()
             break;
 
-        case 14:
+        case 13:
             let entradaCodigoEtp = new Entrada()
             let codigoBuscadoEtp = entradaCodigoEtp.receberTexto(`Por favor, informe o código da etapa: `)
             let resultadoEtp = Etapa.carregar(codigoBuscadoEtp)
@@ -298,7 +312,7 @@ while (execucao) {
             }
             break;
 
-        case 15:
+        case 14:
             if(!temEtapaCarregada){
                 console.log("Nenhuma etapa carregada!")
                 break
@@ -306,7 +320,7 @@ while (execucao) {
             Etapa.iniciar(etpCarregada)
             break;
 
-        case 16:
+        case 15:
             if(!temEtapaCarregada){
                 console.log("Nenhuma etapa carregada!")
                 break
@@ -314,20 +328,20 @@ while (execucao) {
             Etapa.finalizar(etpCarregada)
             break;
 
-        case 17:
+        case 16:
             let entradaAssoc = new Entrada()
             let idAssoc = entradaAssoc.receberTexto("Digite o ID da etapa: ")
             Etapa.associarFuncionario(idAssoc)
             break;
 
-        case 18:
+        case 17:
             let entradaAssocAer = new Entrada()
             let idAssocAer = entradaAssocAer.receberTexto("Digite o ID da aeronave: ")
             Etapa.associarAeronave(idAssocAer, etpCarregada)
             break;
 
         //TESTES
-        case 19:
+        case 18:
             if(!temAeronaveCarregada){
                 console.log("Nenhuma aeronave carregada!")
                 break
@@ -341,7 +355,7 @@ while (execucao) {
             break;
 
         //RELATÓRIOS
-        case 20:
+        case 19:
             if (!temAeronaveCarregada) {
                 console.log("Nenhuma aeronave carregada!")
                 break

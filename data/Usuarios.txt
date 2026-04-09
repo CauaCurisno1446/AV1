@@ -1,3 +1,0 @@
-1;Administrador;111111111;Rua das Flores;admin@;123;ADMINISTRADOR
-2;Engenheiro;2222222222;Rua dos Animais;eng@;321;ENGENHEIRO
-3;Operador;3333333333;Rua dos Carros;opera@;12321
