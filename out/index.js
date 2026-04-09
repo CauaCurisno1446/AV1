@@ -296,6 +296,10 @@ while (execucao) {
                 relatorio.gerar(nomeCliente);
             }
             break;
+        //EASTER EGG
+        case 42:
+            console.log(`\nA resposta para a vida, o universo e tudo mais... mas aqui só temos aeronaves.\n`);
+            break;
         case 0:
             execucao = false;
             console.log(`Até mais`);
